@@ -1,0 +1,2673 @@
+<html>
+    <head>
+        <title>ISIMIP3a &ndash; Water (global)</title>
+
+        <style>
+            @media screen {
+                html {
+                    background-color: silver;
+                }
+                body {
+                    background-color: white;
+                    box-shadow: 0 0 10px #666;
+                    width: 60rem;
+                    margin: 0 auto;
+                    padding: 2rem;
+                }
+            }
+            @media print {
+                body {
+                    zoom: 80%;
+                    margin: 20mm;
+
+                    /* fixex colors in printing */
+                    -webkit-print-color-adjust: exact;
+                }
+                h2 {
+                    break-before: always;
+                }
+            }
+            body {
+                font-family: Helvetica, Arial, sans;
+                font-size: 12pt;
+                line-height: 1.25rem;
+            }
+            h1 {
+                font-size: 2rem;
+                line-height: 2rem;
+                margin: 2rem 0;
+            }
+            h2 {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+            }
+            h3 {
+                margin: 1rem 0;
+            }
+            h5 {
+                margin: 0;
+                font-size: 1rem;
+            }
+            a, a:hover, a:visited, a:focus {
+                color: #0681be;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            table {
+                border-collapse: collapse;
+
+                margin-top: 1rem;
+                margin-bottom: 2rem;
+                width: 100%;
+            }
+            table, th, td {
+                border: 1px solid #4A4A4A;
+            }
+            th, td {
+                padding: 0.8rem;
+                font-size: 0.7em;
+                vertical-align: top;
+                line-height: 1.2em;
+            }
+            td ul {
+                margin: 0;
+                padding-left: 0.8rem;
+            }
+            td ul li {
+                margin-bottom: 0.2rem;
+            }
+            td ul li:last-child {
+                margin-bottom: 0;
+            }
+            td h4 {
+                font-size: 1rem;
+                line-height: 1.1rem;
+                margin-top: 0;
+                margin-bottom: 0.7rem;
+            }
+            td.border-bottom {
+                border-bottom-width: 2px;
+            }
+            table a {
+                word-break: break-all;
+            }
+            table code {
+                font-size: small;
+            }
+            caption {
+                text-align: left;
+                margin-bottom: 0.5em;
+                font-size: small;
+            }
+            thead {
+                background-color: #4A4A4A;
+                color: white;
+            }
+            table .red {
+                background-color: #E5B8B7;
+            }
+            table .gray {
+                background-color: #e5e5e5;
+            }
+            table .green {
+                background-color: #D9EAD3;
+            }
+            code {
+                font-size: 0.8rem;
+                color: #333;
+                background-color: #e5e5e5;
+                border-radius: 3px;
+                padding: 0 3px;
+
+                word-break: break-all;
+            }
+            header {
+                font-size: small;
+                height: 4rem;
+                padding-bottom: 2rem;
+                border-bottom: 1px solid silver;
+            }
+            header img.logo {
+                display: block;
+                height: 4rem;
+            }
+            header, header a, header a:hover, header a:visited, header a:focus {
+                color: silver;
+            }
+            header .right {
+                float: right;
+                text-align: right;
+            }
+            footer {
+                text-align: center;
+                margin-top: 2rem;
+                padding-top: 1rem;
+                border-top: 1px solid silver;
+            }
+            pre {
+                background-color: #efefef;
+                padding: 0.5rem 1rem;
+                white-space: pre-wrap;
+                font-size: smaller;
+            }
+            pre code {
+                font-size: smaller;
+                background-color: transparent;
+                padding: 0;
+            }
+            .toc {
+                width: 50%;
+                border: 1px solid silver;
+            }
+            .toc ul {
+                margin-top: 0.25rem;
+                padding-left: 2rem;
+            }
+            .toc > ul {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                padding-left: 1rem;
+            }
+            .toc li {
+                margin-bottom: 0.25rem;
+                list-style: none;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="right">
+                <p>
+                    Last updated: 19 February 2020
+                </p>
+                <p>
+                    Commit hash: <a href="https://github.com/ISI-MIP/isimip-protocol-3/commit/7b519559498613c68fb8d7e1bb3e002271a74ab0">7b519559498613c68fb8d7e1bb3e002271a74ab0</a>
+                </p>
+            </div>
+            <div>
+                <a href="/isimip-protocol-3/">
+                    <img class="logo" src="https://www.isimip.org/static/images/logo-white.png" alt="ISIMIP logo">
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <h1>ISIMIP3a simulation protocol - Water (global)</h1>
+<div class="toc">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#general-concept">General concept</a></li>
+</ul>
+</li>
+<li><a href="#scenario">Scenario</a></li>
+<li><a href="#input-data">Input data</a><ul>
+<li><a href="#climate-forcing">Climate forcing</a></li>
+<li><a href="#greenhouse-gas-forcing">Greenhouse gas forcing</a></li>
+<li><a href="#socioeconomic-forcing">Socioeconomic forcing</a></li>
+<li><a href="#geographic-data-and-information">Geographic data and information</a></li>
+</ul>
+</li>
+<li><a href="#output-data">Output data</a><ul>
+<li><a href="#output-variables">Output variables</a></li>
+<li><a href="#instructions-on-agricultural-outputs">Instructions on agricultural outputs</a><ul>
+<li><a href="#crop-types">Crop types</a></li>
+<li><a href="#irrigation-water-constraints">Irrigation water constraints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#reporting-model-results">Reporting model results</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<h3 id="general-concept">General concept</h3>
+<p>ISIMIP provides a framework for the collation of a consistent set of climate impact data across sectors and scales. This framework will serve as a basis for model evaluation and improvement, allowing for improved estimates of the biophysical and socio-economic impacts of climate change at different levels of global warming. It also provides a unique opportunity for considering interactions between climate change impacts across sectors through consistent scenarios.</p>
+<p>ISIMIP is intended to be structured in successive rounds, each having its own focus topics and focus regions that inform the scenario design. The main components of the ISIMIP framework are:</p>
+<ul>
+<li>A common set of climate and other input data which will be distributed via a central database;</li>
+<li>A common modelling protocol to ensure consistency across sectors and scales in terms of data, format and scenario set-up;</li>
+<li>A central archive where the output data will be collected and made available to the scientific community.</li>
+</ul>
+<h2 id="scenario">Scenario</h2>
+<table id="tbl:climate_scenario" class="tablenos" style="width: 66%;">
+    <caption>
+      Table 1: Climate scenario specifiers.
+    </caption>
+    <thead>
+        <th style="width: 20%;">Specifier</th>
+        <th style="width: 80%;">Description</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>obsclim</strong></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>spinclim</strong></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>counterclim</strong></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="tbl:soc_forcing" class="tablenos" style="width: 66%;">
+    <caption>
+      Table 2: Socio-economic scenario specifiers.
+    </caption>
+    <thead>
+        <th style="width: 20%;">Specifier</th>
+        <th style="width: 80%;">Description</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>1860soc</strong></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>histsoc</strong></td>
+            <td>Varying historical land use, nitrogen deposition and fertilizer input.</td>
+        </tr>
+        <tr>
+            <td><strong>2015soc</strong></td>
+            <td>Fixed year-2015 land use, nitrogen deposition and fertilizer input.</td>
+        </tr>
+        <tr>
+            <td><strong>nosoc</strong></td>
+            <td>No direct human influences except for varying land use changes up to 2015.</td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="tbl:co2sens_scenario" class="tablenos" style="width: 66%;">
+    <caption>
+      Table 3: Sensitivity scenario specifiers.
+    </caption>
+    <thead>
+        <th style="width: 20%;">Specifier</th>
+        <th style="width: 80%;">Description</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>co2</strong></td>
+            <td>For all experiments other than the sensitivity experiments.</td>
+        </tr>
+        <tr>
+            <td><strong>2015co2</strong></td>
+            <td>CO₂ concentration fixed at 2015 levels.</td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="tbl:scenario" class="tablenos">
+    <caption>
+      Table 4: Scenario set-ups: Each experiment is specified by the climate forcing (CF) and the Direct Human Forcing (DHF).
+    </caption>
+    <thead>
+        <tr>
+            <th style="width: 20%;">Experiment</th>
+
+            <th style="width: 45%;">Short description</th>
+            <th style="width: 15%;">
+                <p>Spin up (XXXX-1900)</p>
+                <p>(only if spin-up is needed)</p>
+            </th>
+            <th style="width: 15%;">
+                <p>Historical (1901-2018)</p>
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2" class="border-bottom">
+                <h4>model evaluation</h4>
+<p>histsoc</p><p><strong>1st priority</strong></p>            </td>
+            <td>
+                <strong>CF:</strong> no climate change before 1860, observed forcing afterwards; 1860 levels of CO₂ until 1860 and based on observations afterwards
+            </td>
+
+
+                <td class="green">
+                    <p>
+                        <strong>spinclim</strong>
+                    </p>
+                </td>
+
+                <td class="gray">
+                    <strong>obsclim</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td class="border-bottom">
+                <strong>DHF:</strong> 1860 levels of direct human influences until 1860, varying direct human influences according to observations afterwards
+            </td>
+
+
+                <td class="green border-bottom" >
+                    <strong>1860soc</strong>
+                </td>
+
+                <td class="gray border-bottom">
+                    <strong>histsoc</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td rowspan="2" class="border-bottom">
+                <h4>model evaluation</h4>
+<p>2015soc</p><p><strong>1st priority</strong></p>            </td>
+            <td>
+                <strong>CF:</strong> no climate change before 1860, observed forcing afterwards; 1860 levels of CO₂ until 1860 and based on observations afterward
+            </td>
+
+
+                <td class="green">
+                    <p>
+                        <strong>spinclim</strong>
+                    </p>
+                </td>
+
+                <td class="gray">
+                    <strong>obsclim</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td class="border-bottom">
+                <strong>DHF:</strong> fixed 2015 levels of direct human influences for the entire time period
+            </td>
+
+
+                <td class="green border-bottom" >
+                    <strong>2015soc</strong>
+                </td>
+
+                <td class="gray border-bottom">
+                    <strong>2015soc</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td rowspan="2" class="border-bottom">
+                <h4>model evaluation</h4>
+<p>nosoc</p><p><strong>2nd priority</strong></p>            </td>
+            <td>
+                <strong>CF:</strong> de-trended observational climate forcing (counterfactual “no climate change” situation)
+            </td>
+
+
+                <td class="green">
+                    <p>
+                        <strong>spinclim</strong>
+                    </p>
+                </td>
+
+                <td class="gray">
+                    <strong>obsclim</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td class="border-bottom">
+                <strong>DHF:</strong> 1860 levels of direct human influences until 1860, varying direct human influences according to observations afterwards
+            </td>
+
+
+                <td class="green border-bottom" >
+                    <strong>nosoc</strong>
+                </td>
+
+                <td class="gray border-bottom">
+                    <strong>nosoc</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td rowspan="2" class="border-bottom">
+                <h4>counterfactual climate</h4>
+<p>histsoc</p><p><strong>1st priority</strong></p>            </td>
+            <td>
+                <strong>CF:</strong> de-trended observational climate forcing (counterfactual “no climate change” situation)
+            </td>
+
+
+                <td rowspan="2" class="border-bottom">
+                    &#34;histsoc&#34; version of spin-up of model evaluation runs
+                </td>
+
+                <td class="gray">
+                    <strong>counterclim</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td class="border-bottom">
+                <strong>DHF:</strong> 1860 levels of direct human influences until 1860, varying direct human influences according to observations afterwards
+            </td>
+
+
+
+                <td class="gray border-bottom">
+                    <strong>histsoc</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td rowspan="2" class="border-bottom">
+                <h4>counterfactual climate</h4>
+<p>2015soc</p><p><strong>1st priority</strong></p>            </td>
+            <td>
+                <strong>CF:</strong> de-trended observational climate forcing (counterfactual “no climate change” situation)
+            </td>
+
+
+                <td rowspan="2" class="border-bottom">
+                    &#34;2015soc&#34; version of spin-up of model evaluation runs
+                </td>
+
+                <td class="gray">
+                    <strong>counterclim</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td class="border-bottom">
+                <strong>DHF:</strong> fixed 2015 levels of direct human influences for the entire time period
+            </td>
+
+
+
+                <td class="gray border-bottom">
+                    <strong>2015soc</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td rowspan="2" class="border-bottom">
+                <h4>counterfactual climate</h4>
+<p>nosoc</p><p><strong>2nd priority</strong></p>            </td>
+            <td>
+                <strong>CF:</strong> de-trended observational climate forcing (counterfactual “no climate change” situation)
+            </td>
+
+
+                <td rowspan="2" class="border-bottom">
+                    &#34;nosoc&#34; version of spin-up of model evaluation runs
+                </td>
+
+                <td class="gray">
+                    <strong>counterclim</strong>
+                </td>
+
+        </tr>
+        <tr>
+            <td class="border-bottom">
+                <strong>DHF:</strong> no direct human influences except for varying land use according to observations
+            </td>
+
+
+
+                <td class="gray border-bottom">
+                    <strong>nosoc</strong>
+                </td>
+
+        </tr>
+    </tbody>
+</table>
+
+<p>For models requiring spin-up, we provide 100 years of spinclim data which is identical with the first 100 years of the counterclim data (files <code>climate/atmosphere/spinclim/&lt;dataset&gt;/&lt;dataset&gt;_spinclim_&lt;variable&gt;_global_daily_&lt;start-year&gt;_&lt;start-year&gt;.nc</code>). If more than 100 years of spin-up are needed, these data can be repeated as often as needed.</p>
+<p>Use historical CO₂ concentration, as provided in the input data archive (filename: <code>composition_atmosphere/co2/co2_historical_annual_1765_2018.txt</code>), for the part of the spin-up directly preceding 1901. When using a longer spin-up period that (nominally) extends back further than 1765, please keep CO2 concentration constant at 1765 level until reaching the year corresponding to 1765.</p>
+<h2 id="input-data">Input data</h2>
+<h3 id="climate-forcing">Climate forcing</h3>
+<table id="tbl:climate_variables" class="tablenos">
+    <caption>
+      Table 5: Climate forcing for ISIMIP3a simulations.
+    </caption>
+    <thead>
+        <th style="width: 30%;">Variable</th>
+        <th style="width: 20%;">Variable specifier</th>
+        <th style="width: 10%;">Unit</th>
+        <th style="width: 10%;">Resolution</th>
+        <th style="width: 30%;">
+Datasets        </th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Atmospheric variables</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Near-Surface Relative Humidity</td>
+            <td>
+                <strong>hurs</strong>
+            </td>
+            <td>%</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Near-Surface Specific Humidity</td>
+            <td>
+                <strong>huss</strong>
+            </td>
+            <td>kg kg-1</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Precipitation</td>
+            <td>
+                <strong>pr</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Surface Air Pressure</td>
+            <td>
+                <strong>ps</strong>
+            </td>
+            <td>Pa</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Surface Downwelling Longwave Radiation</td>
+            <td>
+                <strong>rlds</strong>
+            </td>
+            <td>W m-2</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Surface Downwelling Shortwave Radiation</td>
+            <td>
+                <strong>rsds</strong>
+            </td>
+            <td>W m-2</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Near-Surface Wind Speed</td>
+            <td>
+                <strong>sfcwind</strong>
+            </td>
+            <td>m s-1</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Near-Surface Air Temperature</td>
+            <td>
+                <strong>tas</strong>
+            </td>
+            <td>K</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Daily Maximum Near-Surface Air Temperature</td>
+            <td>
+                <strong>tasmax</strong>
+            </td>
+            <td>K</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Daily Minimum Near-Surface Air Temperature</td>
+            <td>
+                <strong>tasmin</strong>
+            </td>
+            <td>K</td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>GSWP3 (obsclim and counterclim)</li>
+                    <li>GSWP3-W5E5 (obsclim and counterclim)</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p>The climate forcing input files can be found using the following pattern:</p>
+<pre><code>climate/atmosphere/&lt;climate-scenario&gt;/&lt;dataset&gt;/&lt;dataset&gt;_&lt;climate-scenario&gt;_&lt;variable-specifier&gt;_global_daily_&lt;start-year&gt;_&lt;end-year&gt;.nc
+</code></pre>
+
+<h3 id="greenhouse-gas-forcing">Greenhouse gas forcing</h3>
+<table id="tbl:co2sens_scenario" class="tablenos">
+    <caption>
+      Table 6: Greenhouse gas forcing for ISIMIP3a.
+    </caption>
+    <thead>
+        <th style="width: 30%;">Variable</th>
+        <th style="width: 20%;">Variable specifier</th>
+        <th style="width: 10%;">Unit</th>
+        <th style="width: 10%;">Resolution</th>
+        <th style="width: 30%;">Datasets</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">
+                <p>Atmospheric CO2 concentration</p>
+            </td>
+            <td colspan="4">
+                <code>composition_atmosphere/co2/co2_historical_annual_1765_2018.txt</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>co2</strong>
+            </td>
+            <td>ppm</td>
+            <td>
+                <ul>
+                    <li>global</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Meinshausen et al. (2011) for 1765-2005 and Dlugokencky &amp; Tans (2019) from 2006-2018</p></td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="socioeconomic-forcing">Socioeconomic forcing</h3>
+<table>
+    <caption>
+        Table 7: Socioeconomic datasets for the water (global) sector.
+    </caption>
+    <thead>
+        <th style="width: 20%;">Dataset</th>
+        <th style="width: 25%;">Included variables (specifier)</th>
+        <th style="width: 20%;">Covered time period</th>
+        <th style="width: 10%;">Resolution</th>
+        <th style="width: 25%;">Reference/Source and Comments</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Land use</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Landuse totals</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/landuse/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_landuse-totals_annual_&lt;start_year&gt;_&lt;end_year&gt;.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>share of the total cropland (cropland_total)</li>
+                    <li>all of the rainfed cropland (cropland_rainfed)</li>
+                    <li>all of the irrigated cropland (cropland_irrigated)</li>
+                    <li>share of managed pastures or rangeland (pastures)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2018</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Based on the HYDE 3.2 data set (Klein Goldewijk, 2016), but harmonized by Hurtt et al. (LUH2 v2h data set, see Hurtt, Chini, Sahajpal, Frolking, &amp; et al, in prep., see also <a href="https://luh.umd.edu">https://luh.umd.edu</a>).</p></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Downscaling to 5 crops</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/landuse/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_landuse-5crops_annual_&lt;start_year&gt;_&lt;end_year&gt;.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>share of rainfed/irrigated C4 annual crops (c4ann_rainfed, c4ann_irrigated)</li>
+                    <li>share of rainfed/irrigated C3 perennial crops (c3per_rainfed, c3per_irrigated)</li>
+                    <li>share of rainfed/irrigated C3 N-fixing crops (c3nfx_rainfed, c3nfx_irrigated)</li>
+                    <li>share of rainfed/irrigated C4 annual crops (c4ann_rainfed, c4ann_irrigated)</li>
+                    <li>share of rainfed/irrigated C4 perennial crops (c4per_rainfed, c4per_irrigated)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2018</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Based on the HYDE 3.2 data set (Klein Goldewijk, 2016), but harmonized by Hurtt et al. (LUH2 v2h data set, see Hurtt, Chini, Sahajpal, Frolking, &amp; et al, in prep., see also <a href="https://luh.umd.edu">https://luh.umd.edu</a>).</p></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Downscaling to 15 crops</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/landuse/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_landuse-15crops_annual_&lt;start_year&gt;_&lt;end_year&gt;.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>share of rainfed/irrigated maize (maize_rainfed, maize_irrigated)</li>
+                    <li>share of rainfed/irrigated rice (rice_rainfed, rice_irrigated)</li>
+                    <li>share of rainfed/irrigated oil crops (groundnut) (oil_crops_groundnut_rainfed, oil_crops_groundnut_irrigated)</li>
+                    <li>share of rainfed/irrigated oil crops (rapeseed) (oil_crops_rapeseed_rainfed, oil_crops_rapeseed_irrigated)</li>
+                    <li>share of rainfed/irrigated oil crops (soybean) (oil_crops_soybean_rainfed, oil_crops_soybean_irrigated)</li>
+                    <li>share of rainfed/irrigated oil crops (sunflower) (oil_crops_sunflower_rainfed, oil_crops_sunflower_irrigated)</li>
+                    <li>share of rainfed/irrigated pulses (pulses_rainfed, pulses_irrigated)</li>
+                    <li>share of rainfed/irrigated temperate cereals (temperate_cereals_rainfed, temperate_cereals_irrigated)</li>
+                    <li>share of rainfed/irrigated temperate roots (temperate_roots_rainfed, temperate_roots_irrigated)</li>
+                    <li>share of rainfed/irrigated tropical cereals (tropical_cereals_rainfed, tropical_cereals_irrigated)</li>
+                    <li>share of rainfed/irrigated tropical roots (tropical_roots_rainfed, tropical_roots_irrigated)</li>
+                    <li>share of rainfed/irrigated C3 annual crops not covered by the above (others_c3ann_rainfed, others_c3ann_irrigated)</li>
+                    <li>share of rainfed/irrigated C3 N-fixing crops not covered by the above (others_c3nfx_rainfed, others_c3nfx_irrigated)</li>
+                    <li>share of rainfed/irrigated C3 perennial crops (c3per_rainfed, c3per_irrigated)</li>
+                    <li>share of rainfed/irrigated C4 perennial crops (c4per_rainfed, c4per_irrigated)</li>
+                    <li>share of pastures, both managed and rangeland (pastures)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2018</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>The C4 perennial crops are not further downscaled from the "5 crops" data set and currently only include sugarcane.  Similarly, the C3 perennial crops are not downscaled either. The data is derived from the "5 crops" LUH2 data, and the crops have been downscaled to 15 crops according to the ratios given by the Monfreda data set (Monfreda, Ramankutty, &amp; Foley, 2008).</p></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Managed pastures and rangeland</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/landuse/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_landuse-pastures_annual_&lt;start_year&gt;_&lt;end_year&gt;.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>share of managed pastures (managed_pastures)</li>
+                    <li>share of rangeland (rangeland)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2018</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Based on the HYDE 3.2 data set (Klein Goldewijk, 2016), but harmonized by Hurtt et al. (LUH2 v2h data set, see Hurtt, Chini, Sahajpal, Frolking, &amp; et al, in prep., see also <a href="https://luh.umd.edu">https://luh.umd.edu</a>).</p></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Urban areas</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/landuse/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_landuse-urbanareas_annual_&lt;start_year&gt;_&lt;end_year&gt;.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>share of urban areas (urbanareas)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2018</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Based on the HYDE 3.2 data set (Klein Goldewijk, 2016), but harmonized by Hurtt et al. (LUH2 v2h data set, see Hurtt, Chini, Sahajpal, Frolking, &amp; et al, in prep., see also <a href="https://luh.umd.edu">https://luh.umd.edu</a>).</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>N-fertilizer</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Nitrogen deposited by fertilizers on croplands</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/n-fertilizer/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_n-fertilizer-5crops_annual_&lt;start_year&gt;_&lt;end_year&gt;.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>deposition of N through fertilizer on cropland with C3 annual crops (fertl_c3ann)</li>
+                    <li>C3 perennial crops (fertl_c3per)</li>
+                    <li>C3 N-fixing crops (fertl_c3nfx)</li>
+                    <li>C4 annual crops (fertl_c4ann)</li>
+                    <li>C4 perennial crops (fertl_c4per)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2018</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual (growing season)</li>
+                </ul>
+            </td>
+            <td><p>Based on the HYDE 3.2 data set (Klein Goldewijk, 2016), but harmonized by Hurtt et al. (LUH2 v2h data set, see Hurtt, Chini, Sahajpal, Frolking, &amp; et al, in prep., see also <a href="https://luh.umd.edu">https://luh.umd.edu</a>).</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>N-deposition</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Reduced nitrogen deposition</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/n-deposition/&lt;soc_scenario&gt;/ndep_nhx_&lt;soc_scenario&gt;_monthly_&lt;start_year&gt;_&lt;end_year&gt;.nc4</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>NHx deposition</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2016</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td><p>Simulated by NCAR Chemistry-Climate Model Initiative (CCMI) during 1860-2014. Nitrogen deposition data was interpolated to 0.5° by 0.5° by the nearest grid. Data in 2015 and 2016 is assumed to be same as that in 2014 (Tian et al. 2018)</p></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Oxidized nitrogen deposition</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/n-deposition/&lt;soc_scenario&gt;/ndep_noy_&lt;soc_scenario&gt;_monthly_&lt;start_year&gt;_&lt;end_year&gt;.nc4</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>NOy deposition</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2016</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Simulated by NCAR Chemistry-Climate Model Initiative (CCMI) during 1860-2014.  Nitrogen deposition data was interpolated to 0.5° by 0.5° by the nearest grid. Data in 2015 and 2016 is assumed to be same as that in 2014 (Tian et al. 2018)</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Reservoirs &amp; dams</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Reservoirs &amp; dams</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/reservoir_dams/reservoirs_dams_1901_2025.xls</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>name</li>
+                    <li>original location</li>
+                    <li>location adjusted to the DDM30 routing network</li>
+                    <li>upstream area in DDM30 and in GRanD</li>
+                    <li>maximum storage capacity</li>
+                    <li>year of construction/commissioning year</li>
+                    <li>flag of correction (if relocation was applied=1)</li>
+                    <li>river name</li>
+                    <li>height of dam</li>
+                    <li>maximum inundation area and length of reservoir</li>
+                    <li>purpose and source of information</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2025</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid and original coordinates (degree)</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Lehner et al. (2011a, <a href="https://doi.org/10.7927/H4N877QK">https://doi.org/10.7927/H4N877QK</a>), Lehner et al. (2011b, <a href="https://dx.doi.org/10.1890/100125">https://dx.doi.org/10.1890/100125</a>)</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Water abstraction</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Water abstraction for domestic and industrial purposes</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/water_abstraction/[domw|indw][w|c]_&lt;soc_scenario&gt;_annual_1901_2005.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>domestic and industrial water withdrawal and consumption (domww, domwc, indww, indwc)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2005</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>For modelling groups that do not have their own representation, we provide files containing the multi-model mean domestic and industrial water withdrawal and consumption generated from ISIMIP2a varsoc runs of WaterGAP, PCR-GLOBWB, and H08. This data is available in the ISIMIP2b archive, from 1901 until 2005 (ISIMIP2b/InputData/water_abstraction/histsoc). Remaining years after 2005 should be filled in with the analogous data from RCP6.0 (ISIMIP2b/InputData/water_abstraction/rcp60soc/), which is based on multi-model projections from the Water Futures and Solutions project (Wada et al., 2016, <a href="http://www.geosci-model-dev.net/9/175/2016/">http://www.geosci-model-dev.net/9/175/2016/</a>).</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Fishing</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Fishing effort</p>
+            </td>
+            <td colspan="4">
+                <span>Please contact the sectoral coordinators of the marine ecosystems and fisheries sector to gain access to this data.</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>fishing effort</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1950-2014</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Marine ecosystems or exclusive economic zones</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>From the Sea Around Us Project (SAUP). This data can currently not be hosted on ISIMIP servers; modelers are asked to contact the sectoral coordinators of the marine ecosystems and fisheries sector to gain access to this data.</p></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Fish catch</p>
+            </td>
+            <td colspan="4">
+                <span>Please contact the sectoral coordinators of the marine ecosystems and fisheries sector to gain access to this data.</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>fish catch</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1950-2014</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Marine ecosystems or exclusive economic zones</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>From the Regional Fisheries Management Organizations (RFMOs) local fisheries agencies. This data can currently not be hosted on ISIMIP servers; modelers are asked to contact the sectoral coordinators of the marine ecosystems and fisheries sector to gain access to this data.</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Forest management</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Forest management</p>
+            </td>
+            <td colspan="4">
+                <a href="http://doi.org/10.5880/PIK.2019.008">http://doi.org/10.5880/PIK.2019.008</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>stem numbers (stemno)</li>
+                    <li>tree species (species)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Bily Kriz: 1997-2015</li>
+                    <li>Collelongo: 1992-2012</li>
+                    <li>Hyytiälä: 1995-2011</li>
+                    <li>KROOF: 1997-2010</li>
+                    <li>Le Bray: 1986-2009</li>
+                    <li>Peitz: 1948-2011</li>
+                    <li>Solling-beech: 1967-2014</li>
+                    <li>Solling-spruce: 1967-2014</li>
+                    <li>Soro: 1944-2010</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>plot-specific</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Reyer et al. 2019a, b management prescribes stem numbers remaining after harvest, management data is annual but not every year has data.</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Population</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Population 5&#39; grid</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/population/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_population_5arcmin_annual_1901_2017.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>total number of people (popc)</li>
+                    <li>rural number of people (rurc)</li>
+                    <li>urban number of people (urbc)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2017</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>5&#39; grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>HYDE v3.2.1 (Klein Goldewijk et al., 2017). Decadal data prior to year 2000 have been linearly interpolated in time.</p></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>Population 0.5° grid</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/population/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_population_30arcmin_annual_1901_2017.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>total number of people (popc)</li>
+                    <li>rural number of people (rurc)</li>
+                    <li>urban number of people (urbc)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2017</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>HYDE v3.2.1 (Klein Goldewijk et al., 2017). Decadal data prior to year 2000 have been linearly interpolated in time. Aggregated to 0.5° spatial resolution</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>GDP</strong>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                <p>GDP</p>
+            </td>
+            <td colspan="4">
+                <code>socioeconomic/gdp/&lt;soc_scenario&gt;/&lt;soc_scenario&gt;_gdp_annual_1901_2017.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>GDP PPP 2005 USD (gdp)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>1860-1900</li>
+                    <li>1901-2016</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>country-level and 0.5° grid</li>
+                    <li>annual</li>
+                </ul>
+            </td>
+            <td><p>Historic country-level GDP data are an extension of the data provided by Geiger, 2018 (<a href="https://www.earth-syst-sci-data.net/10/847/2018/essd-10-847-2018.html">https://www.earth-syst-sci-data.net/10/847/2018/essd-10-847-2018.html</a>), and are derived mainly from the Maddison Project database. Gridded GDP data is based on the downscaling algorithm developed by Murakami &amp; Yamagata, 2019 (<a href="https://www.mdpi.com/2071-1050/11/7/2106">https://www.mdpi.com/2071-1050/11/7/2106</a>, <a href="http://doi.org/10.5880/pik.2017.007">http://doi.org/10.5880/pik.2017.007</a>). The years 2000-2016 have been rescaled to provide a better match to the updated national GDP time series.</p></td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="geographic-data-and-information">Geographic data and information</h3>
+<table>
+    <caption>
+        Table 8: Geographic data and information for the water (global) sector.
+    </caption>
+    <thead>
+        <th style="width: 20%;">Dataset</th>
+        <th style="width: 30%;">Included variables (specifier)</th>
+        <th style="width: 10%;">Resolution</th>
+        <th style="width: 40%;">Reference/Source and Comments</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Land/Sea masks</strong>
+            </td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>landseamask_gswp3</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/landseamask/landseamask_gswp3.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>land-sea mask (mask)</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td><p>GSWP3</p></td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>landseamask_gswp3-w5e5</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/landseamask/landseamask_gswp3-w5e5.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>land-sea mask (mask)</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td><p>GSWP3-W5E5</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Soil</strong>
+            </td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>gswp3_hwsd</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/soil/gswp3_hwsd.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>soil type</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td><p>One fixed pattern to be used for all simulation periods. Upscaled Soil texture map (30 arc sec. to 0.5°x0.5° grid) based on Harmonized World Soil Database v1.1 (HWSD) using the GSWP3 upscaling method A (<a href="http://hydro.iis.u-tokyo.ac.jp/~sujan/research/gswp3/soil-texture-map.html">http://hydro.iis.u-tokyo.ac.jp/~sujan/research/gswp3/soil-texture-map.html</a>)</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>River routing</strong>
+            </td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>basins</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/river_routing/ddm30_basins_cru_neva.[nc|asc]</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>basin number (basinnumber)</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td><p>DDM30 (Döll &amp; Lehner, 2002). Documentation (pdf) is provided alongside data files.</p></td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>flowdir</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/river_routing/ddm30_flowdir_cru_neva.[nc|asc]</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>flow direction (flowdirection)</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td><p>DDM30 (Döll &amp; Lehner, 2002). Documentation (pdf) is provided alongside data files.</p></td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>slopes</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/river_routing/ddm30_slopes_cru_neva.[nc|asc]</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>slope (slope)</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td><p>DDM30 (Döll &amp; Lehner, 2002). Documentation (pdf) is provided alongside data files.</p></td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Lakes</strong>
+            </td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>pctlake</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/lakes/pctlake.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>percentage of lakes in grid cell (pct_lake)</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td></td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>lakemask</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/lakes/lakemask.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>total lake surface area in grid cell (tot_area)</li>
+                    <li>average surface area of lakes in grid cell (avg_area)</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td></td>
+        </tr>
+               <tr>
+            <td rowspan="2">
+                <p>
+                    <strong>lakedepth</strong>
+                </p>
+            </td>
+            <td colspan="4">
+                <code>geoconditions/lakes/lakedepth.nc</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>lake depth (lakedepth)</li>
+                </ul>
+            </td>
+            <td>0.5° grid</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="output-data">Output data</h2>
+<h3 id="output-variables">Output variables</h3>
+<table>
+    <caption>
+        Table 9: Output variables for the water (global) sector.
+    </caption>
+    <thead>
+        <th style="width: 20%;">Variable</th>
+        <th style="width: 20%;">Variable specifier</th>
+        <th style="width: 10%;">Unit (NetCDF format)</th>
+        <th style="width: 10%;">Dimensions</th>
+        <th style="width: 10%;">Resolution</th>
+        <th style="width: 30%;">Comments</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Hydrological variables</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Runoff</td>
+            <td>
+                <strong>qtot</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td>Total runoff leaving the land portion of the grid cell</td>
+        </tr>
+        <tr>
+            <td>Surface runoff</td>
+            <td>
+                <strong>qs</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>The total surface runoff leaving the land portion of the grid cell.</td>
+        </tr>
+        <tr>
+            <td>Subsurface runoff</td>
+            <td>
+                <strong>qsb</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Sum of water that flows out from subsurface layer(s) including the groundwater layer (if present). Equals qg in case of a groundwater layer below only one soil layer.</td>
+        </tr>
+        <tr>
+            <td>Groundwater recharge</td>
+            <td>
+                <strong>qr</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Water that percolates through the soil layer(s) into the groundwater layer. In case seepage is simulated but no groundwater layer is present, report seepage as qr and qg.</td>
+        </tr>
+        <tr>
+            <td>Groundwater runoff</td>
+            <td>
+                <strong>qg</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Water that leaves the groundwater layer. In case seepage is simulated but no groundwater layer is present, report seepage as qr and qg.</td>
+        </tr>
+        <tr>
+            <td>Discharge (gridded)</td>
+            <td>
+                <strong>dis</strong>
+            </td>
+            <td>m3 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily</li>
+                </ul>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Monthly maximum of daily discharge </td>
+            <td>
+                <strong>maxdis</strong>
+            </td>
+            <td>m3 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Optional variable – please report if daily discharge data is not reported.</td>
+        </tr>
+        <tr>
+            <td>Monthly minimum of daily discharge </td>
+            <td>
+                <strong>mindis</strong>
+            </td>
+            <td>m3 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Optional variable – please report if daily discharge data is not reported.</td>
+        </tr>
+        <tr>
+            <td>Evapotranspiration</td>
+            <td>
+                <strong>evap-{&#39;biomes&#39;: &#39;&lt;pft/total&gt;&#39;, &#39;forestry&#39;: &#39;&#39;, &#39;water_global&#39;: &#39;&#39;, &#39;water_regional&#39;: &#39;&#39;}</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Sum of transpiration, evaporation, interception and sublimation.</td>
+        </tr>
+        <tr>
+            <td>Potential Evapotranspiration</td>
+            <td>
+                <strong>potevap</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>As Evap, but with all resistances set to zero, except the aerodynamic resistance.</td>
+        </tr>
+        <tr>
+            <td>Soil moisture for each layer</td>
+            <td>
+                <strong>soilmoist</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If possible, please provide soil moisture for all depth layers (i.e. 3D-field), and indicate depth in m. Otherwise, provide soil moisture of entire column.</td>
+        </tr>
+        <tr>
+            <td>Soil moisture, root zone</td>
+            <td>
+                <strong>rootmoist</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Total simulated soil moisture available for evapotranspiration. If simulated by the model. Please indicate the depth of the root zone for each vegetation type in your model. If depth varies over time or space</td>
+        </tr>
+        <tr>
+            <td>Frozen soil moisture for each layer</td>
+            <td>
+                <strong>soilmoistfroz</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Please provide soil moisture for all depth levels and indicate depth in m. Please provide for purposes of permafrost sector.</td>
+        </tr>
+        <tr>
+            <td>Temperature of Soil</td>
+            <td>
+                <strong>tsl</strong>
+            </td>
+            <td>K</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>daily, monthly</li>
+                </ul>
+            </td>
+            <td>Temperature of each soil layer. Reported as &#34;missing&#34; for grid cells occupied entirely by &#34;sea&#34;.</td>
+        </tr>
+        <tr>
+            <td>Snow depth</td>
+            <td>
+                <strong>snd</strong>
+            </td>
+            <td>m</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Grid cell mean depth of snowpack.</td>
+        </tr>
+        <tr>
+            <td>Snow water equivalent</td>
+            <td>
+                <strong>swe</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Total water mass of the snowpack (liquid or frozen) averaged over grid cell.</td>
+        </tr>
+        <tr>
+            <td>Total water storage</td>
+            <td>
+                <strong>tws</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water storage in all compartments. Please indicate in the netcdf metadata which storage compartments are considered.</td>
+        </tr>
+        <tr>
+            <td>Canopy water storage</td>
+            <td>
+                <strong>canopystor</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water storage in the canopy.</td>
+        </tr>
+        <tr>
+            <td>Glacier storage</td>
+            <td>
+                <strong>glacierstor</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water storage in glaciers.</td>
+        </tr>
+        <tr>
+            <td>Groundwater storage</td>
+            <td>
+                <strong>groundwstor</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water storage in groundwater layer.</td>
+        </tr>
+        <tr>
+            <td>Lake storage</td>
+            <td>
+                <strong>lakestor</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water storage in lakes (except reservoirs).</td>
+        </tr>
+        <tr>
+            <td>Wetland storage</td>
+            <td>
+                <strong>wetlandstor</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water storage in wetlands.</td>
+        </tr>
+        <tr>
+            <td>Reservoir storage</td>
+            <td>
+                <strong>reservoirstor</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water storage in reservoirs.</td>
+        </tr>
+        <tr>
+            <td>Reservoir storage</td>
+            <td>
+                <strong>riverstor</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water storage in rivers.</td>
+        </tr>
+        <tr>
+            <td>Annual maximum thaw depth</td>
+            <td>
+                <strong>thawdepth</strong>
+            </td>
+            <td>m</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Calculated from daily thaw depths.</td>
+        </tr>
+        <tr>
+            <td>River temperature</td>
+            <td>
+                <strong>triver</strong>
+            </td>
+            <td>kg m-2</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Mean monthly water temperature in river (representative of the average temperature across the channel volume).</td>
+        </tr>
+        <tr>
+            <td>Rainfall</td>
+            <td>
+                <strong>rainf</strong>
+            </td>
+            <td> kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Required for test purposes only. If you need to reduce output data volumes, please provide these variables only once, with the first (test) data set you submit, e.g. for the first decade of each experiment. NOTE: rainf + snowf = total precipitation</td>
+        </tr>
+        <tr>
+            <td>Snowfall</td>
+            <td>
+                <strong>snowf</strong>
+            </td>
+            <td> kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Required for test purposes only. If you need to reduce output data volumes, please provide these variables only once, with the first (test) data set you submit, e.g. for the first decade of each experiment. NOTE: rainf + snowf = total precipitation</td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Water management variables (for models that consider water management/human impacts)</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Irrigation water withdrawal (assuming unlimited water supply)</td>
+            <td>
+                <strong>pirrww-{&#39;agriculture&#39;: &#39;&lt;crop&gt;-&lt;irrigation&gt;&#39;, &#39;water_global&#39;: &#39;&#39;, &#39;water_regional&#39;: &#39;&#39;}</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Irrigation water withdrawn in case of optimal irrigation (in addition to rainfall), assuming no losses in conveyance and application.</td>
+        </tr>
+        <tr>
+            <td>Actual irrigation water withdrawal</td>
+            <td>
+                <strong>airrww</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Irrigation water withdrawal, taking water availability into account; please provide if computed.</td>
+        </tr>
+        <tr>
+            <td>Potential irrigation water consumption</td>
+            <td>
+                <strong>pirruse</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Portion of withdrawal that is evapo-transpired, assuming unlimited water supply.</td>
+        </tr>
+        <tr>
+            <td>Actual irrigation water consumption</td>
+            <td>
+                <strong>airruse</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Portion of withdrawal that is evapo-transpired, taking water availability into account; if computed.</td>
+        </tr>
+        <tr>
+            <td>Actual green water consumption on irrigated cropland</td>
+            <td>
+                <strong>airrusegreen</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Actual evapotranspiration from rainwater over irrigated cropland; if computed.</td>
+        </tr>
+        <tr>
+            <td>Potential green water consumption on irrigated cropland</td>
+            <td>
+                <strong>pirrusegreen</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Potential evapotranspiration from rainwater over irrigated cropland; if computed and different from AIrrUseGreen.</td>
+        </tr>
+        <tr>
+            <td>Actual green water consumption on rainfed cropland</td>
+            <td>
+                <strong>arainfusegreen</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Actual evapotranspiration from rainwater over rainfed cropland; if computed.</td>
+        </tr>
+        <tr>
+            <td>Actual domestic water withdrawal</td>
+            <td>
+                <strong>adomww</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Actual domestic water consumption</td>
+            <td>
+                <strong>adomuse</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Actual manufacturing water withdrawal</td>
+            <td>
+                <strong>amanww</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Actual manufacturing water consumption</td>
+            <td>
+                <strong>amanuse</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Actual electricity water withdrawal</td>
+            <td>
+                <strong>aelecww</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Actual electricity water consumption</td>
+            <td>
+                <strong>aelecuse</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Actual livestock water withdrawal</td>
+            <td>
+                <strong>aliveww</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Actual livestock water consumption</td>
+            <td>
+                <strong>aliveuse</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Total (all sectors) actual water consumption</td>
+            <td>
+                <strong>atotuse</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Sum of actual water consumption from all sectors. Please indicate in metadata which sectors are included.</td>
+        </tr>
+        <tr>
+            <td>Total (all sectors) actual water withdrawal</td>
+            <td>
+                <strong>atotww</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>If computed.</td>
+        </tr>
+        <tr>
+            <td>Total (all sectors) potential water withdrawal</td>
+            <td>
+                <strong>ptotww</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Sum of potential (i.e. assuming unlimited water supply) water withdrawal from all sectors. Please indicate in metadata which sectors are included.</td>
+        </tr>
+        <tr>
+            <td>Total (all sectors) potential water consumption</td>
+            <td>
+                <strong>ptotuse</strong>
+            </td>
+            <td>kg m-2 s-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>monthly</li>
+                </ul>
+            </td>
+            <td>Sum of potential (i.e. assuming unlimited water supply) water consumption from all sectors. Please indicate in metadata which sectors are included.</td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Agricultural variables</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Crop yields</td>
+            <td>
+                <strong>yield-&lt;crop&gt;-&lt;irrigation&gt;</strong>
+            </td>
+            <td>dry matter (t ha-1 per growing season)</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>seasonal</li>
+                </ul>
+            </td>
+            <td>Crop-specific: Yield may be identical to above-ground biomass (biom) if the entire plant is harvested, e.g. for bioenergy production.</td>
+        </tr>
+        <tr>
+            <td>Actual planting dates</td>
+            <td>
+                <strong>plantday-&lt;crop&gt;-&lt;irrigation&gt;</strong>
+            </td>
+            <td>Day of year</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>seasonal</li>
+                </ul>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Anthesis dates</td>
+            <td>
+                <strong>anthday-&lt;crop&gt;-&lt;irrigation&gt;</strong>
+            </td>
+            <td>Days from planting date</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>seasonal</li>
+                </ul>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Maturity dates</td>
+            <td>
+                <strong>matyday-&lt;crop&gt;-&lt;irrigation&gt;</strong>
+            </td>
+            <td>Days from planting date</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>seasonal</li>
+                </ul>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Nitrogen application rate</td>
+            <td>
+                <strong>initr-&lt;crop&gt;-&lt;irrigation&gt;</strong>
+            </td>
+            <td>kg ha-1 per growing season</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>seasonal</li>
+                </ul>
+            </td>
+            <td>Total nitrogen application rate. If organic and inorganic amendments are applied, rate should be reported as effective inorganic nitrogen input (ignoring residues).</td>
+        </tr>
+        <tr>
+            <td>Above ground biomass (dry matter)</td>
+            <td>
+                <strong>biom-&lt;crop&gt;-&lt;irrigation&gt;</strong>
+            </td>
+            <td>t ha-1 per growing season</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>seasonal</li>
+                </ul>
+            </td>
+            <td>The whole plant biomass above ground.</td>
+        </tr>
+        <tr>
+            <td>Soil carbon emissions </td>
+            <td>
+                <strong>sco2-&lt;crop&gt;-&lt;irrigation&gt;</strong>
+            </td>
+            <td>kg C ha-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>seasonal</li>
+                </ul>
+            </td>
+            <td>Ideally should be modeled with realistic land-use history and initial carbon pools. Subject to extra study.</td>
+        </tr>
+        <tr>
+            <td>Nitrous oxide emissions</td>
+            <td>
+                <strong>sn2o-&lt;crop&gt;-&lt;irrigation&gt;</strong>
+            </td>
+            <td>kg N2O-N ha-1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>seasonal</li>
+                </ul>
+            </td>
+            <td>Ideally should be modeled with realistic land-use history and initial carbon pools. Subject to extra study.</td>
+        </tr>
+        <tr>
+            <td colspan="7" class="gray">
+                <strong>Static output</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Soil types</td>
+            <td>
+                <strong>soil</strong>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>constant</li>
+                </ul>
+            </td>
+            <td>Soil types or texture classes as used by your model. Please include a description of each type or class, especially if these are different from the standard HSWD and GSWP3 soil types. Please also include a description of the parameters and values associated with these soil types (parameter values could be submitted as spatial fields where appropriate).</td>
+        </tr>
+        <tr>
+            <td>Leaf Area Index</td>
+            <td>
+                <strong>lai-{&#39;biomes&#39;: &#39;&lt;pft/total&gt;&#39;, &#39;forestry&#39;: &#39;&lt;species/total&gt;&#39;, &#39;permafrost&#39;: &#39;&lt;pft/total&gt;&#39;, &#39;water_global&#39;: &#39;&#39;, &#39;water_regional&#39;: &#39;&#39;}</strong>
+            </td>
+            <td>1</td>
+            <td></td>
+            <td>
+                <ul>
+                    <li>0.5° grid</li>
+                    <li>constant or monthly</li>
+                </ul>
+            </td>
+            <td>If used by, or computed by the model.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="instructions-on-agricultural-outputs">Instructions on agricultural outputs</h3>
+<h4 id="crop-types">Crop types</h4>
+<p>The reporting of the crop yield-related outputs differs from the reporting of other variables in the water sector, as it is not done according to calendar years but according to growing seasons to resolve potential multiple harvests. See the <a href="agriculture.html">agriculture</a> sector for details.</p>
+<p>Simulations should be provided for the four major crops (wheat, maize, soy, and rice) but output for other crops and also bioenergy crops is highly welcome, too.</p>
+<table id="tbl:crop" class="tablenos" style="width: 50%;">
+    <caption>
+      Table 10: Crop naming and priorities.
+    </caption>
+    <thead>
+        <th style="width: 50%;">Crop</th>
+        <th style="width: 50%;">Specifier</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="6" class="gray">
+                <strong>Major crops</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Wheat</td>
+            <td>
+                <strong>whe</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Maize</td>
+            <td>
+                <strong>mai</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Soy</td>
+            <td>
+                <strong>soy</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Rice</td>
+            <td>
+                <strong>ric</strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" class="gray">
+                <strong>Other crops</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Barley</td>
+            <td>
+                <strong>bar</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Bean</td>
+            <td>
+                <strong>ben</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Cassava</td>
+            <td>
+                <strong>cas</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>cotton</td>
+            <td>
+                <strong>cot</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Eucalyptus</td>
+            <td>
+                <strong>euc</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Managed grass</td>
+            <td>
+                <strong>mgr</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Millet</td>
+            <td>
+                <strong>mil</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Miscanthus</td>
+            <td>
+                <strong>mis</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Groundnuts</td>
+            <td>
+                <strong>nut</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Field peas</td>
+            <td>
+                <strong>pea</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Poplar</td>
+            <td>
+                <strong>pop</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Potato</td>
+            <td>
+                <strong>pot</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Rapeseed</td>
+            <td>
+                <strong>rap</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Rye</td>
+            <td>
+                <strong>rye</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Sugar beet</td>
+            <td>
+                <strong>sgb</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Sorghum</td>
+            <td>
+                <strong>sor</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Sugarcane</td>
+            <td>
+                <strong>sug</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>Sunflower</td>
+            <td>
+                <strong>sun</strong>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h4 id="irrigation-water-constraints">Irrigation water constraints</h4>
+<p>Yields simulations provided in the water sector should account for irrigation water constraints. For each crop, yields should be reported separately for irrigated land (<code>cirr</code> for <em>constrained irrigation</em>) and rainfed land (<code>noirr</code>). This complements the full irrigation (<code>firr</code>) pure crop runs requested in the agriculture part of the protocol.</p>
+<table id="tbl:irrigation" class="tablenos" style="width: 50%;">
+    <caption>
+      Table 11: Irrigation specifiers.
+    </caption>
+    <thead>
+        <th style="width: 20%;">Irrigation type</th>
+        <th style="width: 10%;">Specifier</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Constrained irrigation</td>
+            <td><strong>cirr</strong></td>
+        </tr>
+        <tr>
+            <td>No irrigation (rainfed land)</td>
+            <td><strong>noirr</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="reporting-model-results">Reporting model results</h2>
+<p>The specification on how to submit the data, as well as further information and instructions are given on the ISIMIP website at:</p>
+<p><a href="https://www.isimip.org/protocol/preparing-simulation-files">https://www.isimip.org/protocol/preparing-simulation-files</a></p>
+<p>It is important that you comply precisely with the formatting specified there, in order to facilitate the analysis of your simulation results in the ISIMIP framework. Incorrect formatting can
+seriously delay the analysis. The ISIMIP Team will be glad to assist with the preparation of these files if necessary.</p>
+<p>File names consist of a series of identifiers, separated by underscores. Please name the files in the Water (global) sector according to the following pattern:</p>
+<pre><code>&lt;modelname&gt;_&lt;climate_forcing&gt;_&lt;detrending&gt;_&lt;climate_scenario&gt;_&lt;soc_scenario&gt;_&lt;sens_scenario&gt;_&lt;variable&gt;(-&lt;crop&gt;-&lt;irrigation&gt;|-&lt;pft&gt;)_&lt;region&gt;_&lt;timestep&gt;_&lt;start_year&gt;_&lt;end_year&gt;.nc
+</code></pre>
+
+<p>The following regular expression can be used to validate and parse the file name for the water (global) sector:</p>
+<pre><code>(?P&lt;modelname&gt;[a-z0-9-]+)_(?P&lt;climate_forcing&gt;[a-z0-9-]+)_(?P&lt;detrending&gt;[a-z0-9]+)_(?P&lt;climate_scenario&gt;[a-z0-9]+)_(?P&lt;soc_scenario&gt;[a-z0-9]+)_(?P&lt;sens_scenario&gt;[a-z0-9-]+)_(?P&lt;variable&gt;[a-z0-9]+)(-(?P&lt;crop&gt;[a-z0-9]+)-(?P&lt;irrigation&gt;(firr|cirr|noirr))|-(?P&lt;pft&gt;[a-z0-9-]+))?_(?P&lt;region&gt;[a-z0-9-]+)_(?P&lt;timestep&gt;[a-z]+)_(?P&lt;start_year&gt;\d{4})_(?P&lt;end_year&gt;\d{4}).nc
+</code></pre>
+
+<p>For questions or clarifications, please contact info@isimip.org or the data manager directly (buechner@pik‐potsdam.de) before submitting files.</p>
+<h2 id="references">References</h2>
+<div id="refs" class="references">
+<div id="ref-dlugokencky-2019">
+<p>Dlugokencky, E. and Tans, P.: Trends in atmospheric carbon dioxide, Natl. Ocean. Atmos. Adm. Earth Syst. Res. Lab. [online] Available from: <a href="www.esrl.noaa.gov/gmd/ccgg/trends/" class="uri">www.esrl.noaa.gov/gmd/ccgg/trends/</a>, 2019.</p>
+</div>
+<div id="ref-geiger_continuous_2018">
+<p>Geiger, T.: Continuous national gross domestic product (GDP) time series for 195 countries: Past observations (1850–2005) harmonized with future projections according to the Shared Socio-economic Pathways (2006–2100), Earth System Science Data, 10(2), 847–856, doi:<a href="https://doi.org/10.5194/essd-10-847-2018">10.5194/essd-10-847-2018</a>, 2018.</p>
+</div>
+<div id="ref-KleinGoldewijk2017">
+<p>Klein Goldewijk, K., Beusen, A., Doelman, J. and Stehfest, E.: Anthropogenic land use estimates for the holocene – hYDE 3.2, Earth System Science Data, 9(2), 927–953, doi:<a href="https://doi.org/10.5194/essd-9-927-2017">10.5194/essd-9-927-2017</a>, 2017.</p>
+</div>
+<div id="ref-doi:10.7927/H4N877QK">
+<p>Lehner, B., Liermann, C. R., Revenga, C., Vörösmarty, C., Fekete, B., Crouzet, P., Döll, P., Endejan, M., Frenken, K., Magome, J., Nilsson, C., Robertson, J. C., Rödel, R., Sindorf, N. and Wisser, D.: Global reservoir and dam database, version 1 (gRanDv1): Dams, revision 01. palisades, nY, NASA Socioeconomic Data and Applications Center (SEDAC), doi:<a href="https://doi.org/10.7927/H4N877QK">10.7927/H4N877QK</a>, 2011a.</p>
+</div>
+<div id="ref-doi:10.1890/100125">
+<p>Lehner, B., Liermann, C. R., Revenga, C., Vörösmarty, C., Fekete, B., Crouzet, P., Döll, P., Endejan, M., Frenken, K., Magome, J., Nilsson, C., Robertson, J. C., Rödel, R., Sindorf, N. and Wisser, D.: High-resolution mapping of the world’s reservoirs and dams for sustainable river-flow management, Frontiers in Ecology and the Environment, 9(9), 494–502, doi:<a href="https://doi.org/10.1890/100125">10.1890/100125</a>, 2011b.</p>
+</div>
+<div id="ref-Meinshausen2011">
+<p>Meinshausen, M., Smith, S. J., Calvin, K., Daniel, J. S., Kainuma, M. L. T., Lamarque, J.-F., Matsumoto, K., Montzka, S. A., Raper, S. C. B., Riahi, K., Thomson, A., Velders, G. J. M. and Vuuren, D. P. P. van: The rCP greenhouse gas concentrations and their extensions from 1765 to 2300, Climatic Change, 109(1), 213, doi:<a href="https://doi.org/10.1007/s10584-011-0156-z">10.1007/s10584-011-0156-z</a>, 2011.</p>
+</div>
+<div id="ref-gmd-2019-222">
+<p>Meinshausen, M., Nicholls, Z., Lewis, J., Gidden, M. J., Vogel, E., Freund, M., Beyerle, U., Gessner, C., Nauels, A., Bauer, N., Canadell, J. G., Daniel, J. S., John, A., Krummel, P., Luderer, G., Meinshausen, N., Montzka, S. A., Rayner, P., Reimann, S., Smith, S. J., Berg, M. van den, Velders, G. J. M., Vollmer, M. and Wang, H. J.: The sSP greenhouse gas concentrations and their extensions to 2500, Geoscientific Model Development Discussions, 2019, 1–77, doi:<a href="https://doi.org/10.5194/gmd-2019-222">10.5194/gmd-2019-222</a>, 2019.</p>
+</div>
+<div id="ref-murakami_estimation_2019">
+<p>Murakami, D. and Yamagata, Y.: Estimation of Gridded Population and GDP Scenarios with Spatially Explicit Statistical Downscaling, Sustainability, 11(7), 2106, doi:<a href="https://doi.org/10.3390/su11072106">10.3390/su11072106</a>, 2019.</p>
+</div>
+<div id="ref-reyer-2019">
+<p>Reyer, C., Silveyra Gonzalez, R., Dolos, K., Hartig, F., Hauf, Y., Noack, M., Lasch-Born, P., Rötzer, T., Pretzsch, H., Meesenburg, H., Fleck, S., Wagner, M., Bolte, A., Sanders, T., Kolari, P., Mäkelä, A., Vesala, T., Mammarella, I., Pumpanen, J., Matteucci, G., Collalti, A., D’Andrea, E., Foltýnová, L., Krejza, J., Ibrom, A., Pilegaard, K., Loustau, D., Bonnefond, J.-M., Berbigier, P., Picart, D., Lafont, S., Dietze, M., Cameron, D., Vieno, M., Tian, H., Palacios-Orueta, A., Cicuendez, V., Recuero, L., Wiese, K., Büchner, M., Lange, S., Volkholz, J., Kim, H., Weedon, G., Sheffield, J., Vega del Valle, I., Suckow, F., Horemans, J., Martel, S., Bohn, F., Steinkamp, J., Chikalanov, A. and Frieler, K.: The pROFOUND database for evaluating vegetation models and simulating climate impacts on forests. v. 0.1.12., GFZ Data Services, doi:<a href="https://doi.org/10.5880/PIK.2019.008">10.5880/PIK.2019.008</a>, 2019a.</p>
+</div>
+<div id="ref-essd-2019-220">
+<p>Reyer, C. P. O., Silveyra Gonzalez, R., Dolos, K., Hartig, F., Hauf, Y., Noack, M., Lasch-Born, P., Rötzer, T., Pretzsch, H., Mesenburg, H., Fleck, S., Wagner, M., Bolte, A., Sanders, T. G. M., Kolari, P., Mäkelä, A., Vesala, T., Mammarella, I., Pumpanen, J., Collalti, A., Trotta, C., Matteucci, G., D’Andrea, E., Foltýnová, L., Krejza, J., Ibrom, A., Pilegaard, K., Loustau, D., Bonnefond, J.-M., Berbigier, P., Picart, D., Lafont, S., Dietze, M., Cameron, D., Vieno, M., Tian, H., Palacios-Orueta, A., Cicuendez, V., Recuero, L., Wiese, K., Büchner, M., Lange, S., Volkholz, J., Kim, H., Weedon, G. P., Sheffield, J., Vega del Valle, I., Suckow, F., Horemans, J. A., Martel, S., Bohn, F., Steinkamp, J., Chikalanov, A., Mahnken, M., Gutsch, M. and Frieler, K.: The pROFOUND database for evaluating vegetation models and simulating climate impacts on forests, Earth System Science Data Discussions, 2019, 1–47, doi:<a href="https://doi.org/10.5194/essd-2019-220">10.5194/essd-2019-220</a>, 2019b.</p>
+</div>
+<div id="ref-doi:10.1175/BAMS-D-17-0212.1">
+<p>Tian, H., Yang, J., Lu, C., Xu, R., Canadell, J. G., Jackson, R. B., Arneth, A., Chang, J., Chen, G., Ciais, P., Gerber, S., Ito, A., Huang, Y., Joos, F., Lienert, S., Messina, P., Olin, S., Pan, S., Peng, C., Saikawa, E., Thompson, R. L., Vuichard, N., Winiwarter, W., Zaehle, S., Zhang, B., Zhang, K. and Zhu, Q.: The global n2O model intercomparison project, Bulletin of the American Meteorological Society, 99(6), 1231–1251, doi:<a href="https://doi.org/10.1175/BAMS-D-17-0212.1">10.1175/BAMS-D-17-0212.1</a>, 2018.</p>
+</div>
+</div>
+        </main>
+
+        <footer>
+            For questions or clarifications, please contact <a href="mailto:info@isimip.org">info@isimip.org</a>.
+        </footer>
+    </body>
+</html>
